@@ -24,30 +24,31 @@ Route::middleware('auth')->group(function () {
 
 Route::prefix('dashboard')->name('dashboard.')->group(function(){
 
-    Route::resource('courses', CourseController::class)->middleware('role:teacher');
+    Route::resource('courses', CourseController::class)
+    ->middleware('role:teacher');
 
-    Route::get('/courses/question/create/{course}', [CourseQuestionController::class],'create')
+    Route::get('/courses/question/create/{course}', [CourseQuestionController::class,'create'])
     ->middleware('role:teacher')
     ->name('course.create.question');
 
-    Route::post('/courses/question/save/{course}', [CourseQuestionController::class],'store')
+    Route::post('/courses/question/save/{course}', [CourseQuestionController::class,'store'])
     ->middleware('role:teacher')
-    ->name('course.create.question.store');
+->name('course.create.question.store');
 
     
     Route::resource('courses_questions', CourseQuestionController::class)
     ->middleware('role:teacher');
 
 
-    Route::get('/courses/student/show/{course}', [CourseStudentController::class], 'index')
+    Route::get('/courses/student/show/{course}', [CourseStudentController::class, 'index'])
     ->middleware('role:teacher')
     ->name('course.course_students.index');
 
-    Route::get('/courses/student/create/{course}', [CourseStudentController::class], 'create')
+    Route::get('/courses/student/create/{course}', [CourseStudentController::class, 'create'])
     ->middleware('role:teacher')
     ->name('course.course_students.create');
 
-    Route::post('/courses/student/create/save/{course}', [CourseStudentController::class], 'store')
+    Route::post('/courses/student/create/save/{course}', [CourseStudentController::class, 'store'])
     ->middleware('role:teacher')
     ->name('course.course_students.store');
 
